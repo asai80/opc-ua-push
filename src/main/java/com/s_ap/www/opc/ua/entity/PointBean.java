@@ -1,13 +1,14 @@
-package com.s_ap.www.opc.ua.core;
+package com.s_ap.www.opc.ua.entity;
 
-import com.s_ap.www.opc.ua.core.PointType.PointTypeEnum;
+import com.s_ap.www.opc.ua.entity.PointType.PointTypeEnum;
+import com.s_ap.www.opc.ua.pointpool.OnPointChange;
 
 /**
  * 
  * @author zihaozhu
  * @date 2017-11-27 2:38:01 PM
  */
-public class Point {
+public class PointBean {
 	private String name; // 点名称
 	private PointTypeEnum pointType; // 点的数据类型
 	private boolean isArray; // True表示该Point是一个数组点；False表示非数组点
@@ -21,17 +22,17 @@ public class Point {
 
 	private OnPointChange onPointChange;// 回调接口
 
-	public Point(String groupName, String name) {
+	public PointBean(String groupName, String name) {
 		this.groupName = groupName;
 		this.name = name;
 	}
 
-	public Point(String groupName, String name, PointTypeEnum pointType) {
+	public PointBean(String groupName, String name, PointTypeEnum pointType) {
 		this(groupName, name);
 		this.setPointType(pointType);
 	}
 
-	public Point(String groupName, String name, PointTypeEnum pointType, boolean isArray) {
+	public PointBean(String groupName, String name, PointTypeEnum pointType, boolean isArray) {
 		this(groupName, name, pointType);
 		this.isArray = isArray;
 	}
@@ -111,7 +112,7 @@ public class Point {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Point other = (Point) obj;
+		PointBean other = (PointBean) obj;
 		if (groupName == null) {
 			if (other.groupName != null)
 				return false;
@@ -166,7 +167,7 @@ public class Point {
 	 * 
 	 * @param p
 	 */
-	public void triggerPointChange(Point p) {
+	public void triggerPointChange(PointBean p) {
 		if (null != this.onPointChange) {
 			this.onPointChange.pointChange(p);
 		}

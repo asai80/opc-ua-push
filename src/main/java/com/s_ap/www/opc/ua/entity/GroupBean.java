@@ -1,4 +1,4 @@
-package com.s_ap.www.opc.ua.core;
+package com.s_ap.www.opc.ua.entity;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import java.util.List;
  * @author zihaozhu
  * @date 2017-11-27 2:39:22 PM
  */
-public class Group {
+public class GroupBean {
 	private String name;
-	private List<Point> points;
+	private List<PointBean> points;
 
 	public String getName() {
 		return name;
@@ -18,19 +18,19 @@ public class Group {
 		this.name = name;
 	}
 
-	public List<Point> getPoints() {
+	public List<PointBean> getPoints() {
 		return points;
 	}
 
-	public void setPoints(List<Point> points) {
+	public void setPoints(List<PointBean> points) {
 		this.points = points;
 	}
 
-	public Group(String name) {
+	public GroupBean(String name) {
 		this.name = name;
 	}
 
-	public void addItems(List<Point> points) {
+	public void addItems(List<PointBean> points) {
 		if (null == this.points) {
 			this.points = points;
 

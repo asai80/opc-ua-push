@@ -1,4 +1,4 @@
-package com.s_ap.www.opc.ua.core;
+package com.s_ap.www.opc.ua.entity;
 
 import java.text.ParseException;
 

@@ -1,8 +1,7 @@
 package com.s_ap.www.opc.ua.pointpool;
 
-import com.s_ap.www.opc.ua.core.Point;
-import com.s_ap.www.opc.ua.core.PointPool;
-import com.s_ap.www.opc.ua.core.PointType.PointTypeEnum;
+import com.s_ap.www.opc.ua.entity.PointBean;
+import com.s_ap.www.opc.ua.entity.PointType.PointTypeEnum;
 import com.s_ap.www.opc.ua.global.Constant;
 import com.s_ap.www.opc.ua.global.Global;
 
@@ -18,11 +17,11 @@ public class DataPointPool extends PointPool {
 	@Override
 	public void createPoints() {
 		String tag = Constant.TAG3;
-		Point newpoint = new Point(GROUP_NAME, tag, PointTypeEnum.STRING);
+		PointBean newpoint = new PointBean(GROUP_NAME, tag, PointTypeEnum.STRING);
 		add(newpoint);
 
 		tag = Constant.TAG4;
-		newpoint = new Point(GROUP_NAME, tag, PointTypeEnum.STRING);
+		newpoint = new PointBean(GROUP_NAME, tag, PointTypeEnum.STRING);
 		add(newpoint);
 
 		/** 加入全局变量 */
@@ -32,7 +31,7 @@ public class DataPointPool extends PointPool {
 	}
 
 	@Override
-	protected void onDataChange(Point p) {
+	protected void onDataChange(PointBean p) {
 		logger.info("-->DataPointPool:" + p + "");
 	}
 

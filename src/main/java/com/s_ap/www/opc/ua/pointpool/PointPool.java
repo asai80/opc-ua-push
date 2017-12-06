@@ -1,9 +1,11 @@
-package com.s_ap.www.opc.ua.core;
+package com.s_ap.www.opc.ua.pointpool;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.LoggerFactory;
+
+import com.s_ap.www.opc.ua.entity.PointBean;
 
 import ch.qos.logback.classic.Logger;
 
@@ -15,13 +17,13 @@ public abstract class PointPool {
 	protected static Logger logger = (Logger) LoggerFactory.getLogger(PointPool.class);
 
 	/** 创建点池对象,监控的点的源头 */
-	private List<Point> points = new ArrayList<Point>();
+	private List<PointBean> points = new ArrayList<PointBean>();
 
-	protected abstract void onDataChange(Point p);
+	protected abstract void onDataChange(PointBean p);
 
 	public abstract void createPoints();
 
-	public List<Point> getPoints() {
+	public List<PointBean> getPoints() {
 		return points;
 	}
 
@@ -34,7 +36,7 @@ public abstract class PointPool {
 		});
 	}
 
-	public void add(Point p) {
+	public void add(PointBean p) {
 		if (!this.getPoints().contains(p)) {
 			this.getPoints().add(p);
 		}

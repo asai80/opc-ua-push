@@ -1,4 +1,4 @@
-package com.s_ap.www.opc.ua.client;
+package com.s_ap.www.opc.ua.test;
 
 public class Client {
 	/**
@@ -7,7 +7,7 @@ public class Client {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new SimpleClent().monitorPoint();
+		new SimpleTest().monitorPoint();
 	}
 
 }

@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.s_ap.www.opc.ua.core.Point;
-import com.s_ap.www.opc.ua.core.PointPool;
+import com.s_ap.www.opc.ua.entity.PointBean;
 import com.s_ap.www.opc.ua.global.Constant;
 
 /**
@@ -16,7 +15,7 @@ import com.s_ap.www.opc.ua.global.Constant;
 public class MonitorPointPool {
 	private PointPool messagePointPool;
 	private PointPool dataPointPool;
-	private Map<String, List<Point>> allMonitorPoints = new HashMap<String, List<Point>>();
+	private Map<String, List<PointBean>> allMonitorPoints = new HashMap<String, List<PointBean>>();
 
 	public MonitorPointPool() {
 		createMessagePointPool();
@@ -42,8 +41,8 @@ public class MonitorPointPool {
 		messagePointPool.monitorPoints();
 	}
 
-	public List<Point> getPoints(String groupName) {
-		List<Point> points = null;
+	public List<PointBean> getPoints(String groupName) {
+		List<PointBean> points = null;
 		if (null != this.allMonitorPoints) {
 			points = this.allMonitorPoints.get(groupName);
 		}

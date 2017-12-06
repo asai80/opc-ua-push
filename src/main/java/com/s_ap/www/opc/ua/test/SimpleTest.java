@@ -1,17 +1,17 @@
-package com.s_ap.www.opc.ua.client;
+package com.s_ap.www.opc.ua.test;
 
 import java.util.Map;
 
-import com.s_ap.www.opc.ua.core.Group;
-import com.s_ap.www.opc.ua.core.OpcProcess;
+import com.s_ap.www.opc.ua.entity.GroupBean;
 import com.s_ap.www.opc.ua.global.Constant;
 import com.s_ap.www.opc.ua.global.Global;
 import com.s_ap.www.opc.ua.pointpool.MonitorPointPool;
+import com.s_ap.www.opc.ua.service.OpcService;
 
-public class SimpleClent {
+public class SimpleTest {
 	public void monitorPoint() {
 		MonitorPointPool monitorPointPool = new MonitorPointPool();
-		OpcProcess opcProcess = Global.getOpcProcess();
+		OpcService opcProcess = Global.getOpcProcess();
 
 		/** 创建opc */
 		createOpc(opcProcess);
@@ -20,7 +20,7 @@ public class SimpleClent {
 		monitorPointPool.createPoints();
 
 		/** 订阅变化点 */
-		Group group = opcProcess.getGroups().get(Constant.GROUP_MESSAGE); 
+		GroupBean group = opcProcess.getGroups().get(Constant.GROUP_MESSAGE); 
 //		Group group2 = opcProcess.getGroups().get(Constant.GROUP_DATA); 
 		opcProcess.setPoints(monitorPointPool.getPoints(group.getName()));
 		opcProcess.subscribeMoreSubscription(group);
@@ -37,11 +37,11 @@ public class SimpleClent {
 		}
 	}
 
-	private void createOpc(OpcProcess opcProcess) {
-		Map<String, Group> groups = opcProcess.getGroups();
+	private void createOpc(OpcService opcProcess) {
+		Map<String, GroupBean> groups = opcProcess.getGroups();
 
 		/** 创建Group */
-		Group group = new Group(Constant.GROUP_MESSAGE);
+		GroupBean group = new GroupBean(Constant.GROUP_MESSAGE);
 		groups.put(Constant.GROUP_MESSAGE, group);
 
 		opcProcess.connect();

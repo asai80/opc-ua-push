@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.eclipse.milo.opcua.stack.core.types.builtin.DateTime;
 
-import com.s_ap.www.opc.ua.client.SimpleClent;
+import com.s_ap.www.opc.ua.test.SimpleTest;
 
 @WebServlet("/StartServlet")
 public class StartServlet extends HttpServlet {
@@ -25,7 +25,7 @@ public class StartServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		response.getWriter().write(DateTime.now() + "\r\n开启...");
-		new SimpleClent().monitorPoint();
+		new SimpleTest().monitorPoint();
 	}
 
 	@Override

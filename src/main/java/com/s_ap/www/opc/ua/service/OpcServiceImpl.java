@@ -1,4 +1,4 @@
-package com.s_ap.www.opc.ua.core;
+package com.s_ap.www.opc.ua.service;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.Unsigned.uint;
@@ -43,6 +43,9 @@ import org.eclipse.milo.opcua.stack.core.types.structured.ReadValueId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.s_ap.www.opc.ua.entity.GroupBean;
+import com.s_ap.www.opc.ua.entity.PointBean;
+import com.s_ap.www.opc.ua.entity.PointType;
 import com.s_ap.www.opc.ua.global.Constant;
 import com.s_ap.www.opc.ua.util.KeyStoreLoader;
 
@@ -51,7 +54,7 @@ import com.s_ap.www.opc.ua.util.KeyStoreLoader;
  * @author zihaozhu
  * @date 2017-11-29 11:24:13 AM
  */
-public class OpcProcessImpl extends OpcProcess {
+public class OpcServiceImpl extends OpcService {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private final KeyStoreLoader loader = new KeyStoreLoader();
@@ -138,7 +141,7 @@ public class OpcProcessImpl extends OpcProcess {
 	}
 
 	@Override
-	public Object read(Point p) {
+	public Object read(PointBean p) {
 		Object result = null;
 		if (!checkPointExists(p)) {
 			return null;
@@ -157,7 +160,7 @@ public class OpcProcessImpl extends OpcProcess {
 	}
 
 	@Override
-	public boolean write(Point p, String value) {
+	public boolean write(PointBean p, String value) {
 		boolean result = false;
 		if (!checkPointExists(p)) {
 			return false;
@@ -184,7 +187,7 @@ public class OpcProcessImpl extends OpcProcess {
 	}
 
 	@Override
-	public Map<String, Object> read(Group g) {
+	public Map<String, Object> read(GroupBean g) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (g.getPoints().isEmpty()) {
 			return null;
@@ -198,14 +201,14 @@ public class OpcProcessImpl extends OpcProcess {
 	}
 
 	@Override
-	public boolean write(Group g, List<String> value) {
+	public boolean write(GroupBean g, List<String> value) {
 		boolean result = true;
 		if (g.getPoints().isEmpty() || g.getPoints().size() != value.size()) {
 			return false;
 		}
 
 		for (int i = 0; i < g.getPoints().size(); i++) {
-			Point point = g.getPoints().get(i);
+			PointBean point = g.getPoints().get(i);
 			boolean write = this.write(point, value.get(i));
 			if (!write) {
 				result = false;
@@ -240,7 +243,7 @@ public class OpcProcessImpl extends OpcProcess {
 	}
 
 	@Override
-	public void subscribe(Point p) {
+	public void subscribe(PointBean p) {
 		if (!checkPointExists(p)) {
 			return;
 		}
@@ -286,19 +289,19 @@ public class OpcProcessImpl extends OpcProcess {
 	}
 
 	@Override
-	public void subscribeMoreSubscription(Group g) {
+	public void subscribeMoreSubscription(GroupBean g) {
 		if (g.getPoints().isEmpty()) {
 			return;
 		}
 
 		for (int i = 0; i < g.getPoints().size(); i++) {
-			Point point = g.getPoints().get(i);
+			PointBean point = g.getPoints().get(i);
 			this.subscribe(point);
 		}
 	}
 
 	@Override
-	public void subscribeOneSubscription(Group g) {
+	public void subscribeOneSubscription(GroupBean g) {
 		if (g.getPoints().isEmpty()) {
 			return;
 		}
@@ -307,7 +310,7 @@ public class OpcProcessImpl extends OpcProcess {
 			List<MonitoredItemCreateRequest> monitoredItemCreateRequests = new ArrayList<>();
 
 			for (int i = 0; i < g.getPoints().size(); i++) {
-				Point p = g.getPoints().get(i);
+				PointBean p = g.getPoints().get(i);
 
 				if (!checkPointExists(p)) {
 					continue;
@@ -359,7 +362,7 @@ public class OpcProcessImpl extends OpcProcess {
 	}
 
 	@Override
-	public void cancelSubscribe(Point p) {
+	public void cancelSubscribe(PointBean p) {
 		OpcUaSubscriptionManager subscriptionManager = client.getSubscriptionManager();
 
 		if (null != subscription) {
@@ -380,7 +383,7 @@ public class OpcProcessImpl extends OpcProcess {
 	}
 
 	@Override
-	public void cancelSubscribe(Group g) {
+	public void cancelSubscribe(GroupBean g) {
 		OpcUaSubscriptionManager subscriptionManager = client.getSubscriptionManager();
 		if (null != subscription) {
 			subscriptionManager.deleteSubscription(subscription.getSubscriptionId());
@@ -401,7 +404,7 @@ public class OpcProcessImpl extends OpcProcess {
 	}
 
 	@Override
-	public boolean checkPointExists(Point p) {
+	public boolean checkPointExists(PointBean p) {
 		return true;
 	}
 
